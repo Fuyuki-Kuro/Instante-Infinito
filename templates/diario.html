@@ -5,7 +5,7 @@
   <p class="sub">Aqui escrevemos as memórias que o tempo não apaga.</p>
 
   <!-- Formulário para nova entrada -->
-  <form method="post" action="/diario">
+  <form method="post" action="/diario?token={{ request.query_params.token }}">
     <textarea name="mensagem" placeholder="Escreva algo bonito aqui..." required></textarea>
     <button type="submit">Salvar no Diário</button>
   </form>
@@ -15,7 +15,7 @@
     {% for entrada in entradas %}
       <div class="entrada">
         <p>{{ entrada.mensagem }}</p>
-        <span class="data">{{ entrada.data.strftime('%d/%m/%Y %H:%M') }}</span>
+        <span class="data">{{ entrada.data }}</span>
       </div>
     {% else %}
       <p class="nenhuma">Nenhuma entrada ainda... comece agora! 🌙</p>

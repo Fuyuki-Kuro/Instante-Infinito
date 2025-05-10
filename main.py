@@ -81,13 +81,13 @@ async def escrever_entrada(request: Request, mensagem: str = Form(...)):
 # Endpoint dummy para validação WebApp
 @app.post("/validate_webapp")
 async def validate_webapp():
-    return {"status": "ok"}
+    return {"valid": True}
 
 # Página de acesso negado
 @app.get("/unauthorized")
 async def unauthorized(request: Request):
     return templates.TemplateResponse("unauthorized.html", {"request": request}, status_code=403)
 
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=int(os.getenv("PORT", 9000)), reload=True)
+def main():
+        import uvicorn
+        uvicorn.run(app, host="0.0.0.0", port=9000)
