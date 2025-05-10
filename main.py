@@ -13,6 +13,11 @@ from diario.diario_storage import adicionar_entrada, obter_entradas
 # Carrega variáveis de ambiente
 load_dotenv()
 
+USER_NAMES = {
+    os.getenv("ID_HE"): "Leonardo",
+    os.getenv("ID_SHE"): "Angélica",
+}
+
 # Configuração de logs
 logging.basicConfig(
     filename="app.log",
