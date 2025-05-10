@@ -5,17 +5,25 @@
   <p class="sub">Aqui escrevemos as memórias que o tempo não apaga.</p>
 
   <!-- Formulário para nova entrada -->
-  <form method="post" action="/diario?token={{ request.query_params.token }}">
+  <form class="new-entry-form" method="post" action="/diario?token={{ request.query_params.token }}">
     <textarea name="mensagem" placeholder="Escreva algo bonito aqui..." required></textarea>
     <button type="submit">Salvar no Diário</button>
   </form>
 
-  <!-- Lista de entradas já salvas -->
-  <div class="entradas">
+  <!-- Timeline de entradas -->
+  <div class="timeline">
     {% for entrada in entradas %}
-      <div class="entrada">
-        <p>{{ entrada.mensagem }}</p>
-        <span class="data">{{ entrada.data }}</span>
+      <div class="post-card">
+        <div class="post-header">
+          <div class="avatar">{{ entrada.author[0]|upper }}</div>
+          <div>
+            <span class="author-name">{{ entrada.author }}</span><br>
+            <span class="post-date">{{ entrada.data }}</span>
+          </div>
+        </div>
+        <div class="post-content">
+          <p>{{ entrada.mensagem }}</p>
+        </div>
       </div>
     {% else %}
       <p class="nenhuma">Nenhuma entrada ainda... comece agora! 🌙</p>

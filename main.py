@@ -8,7 +8,7 @@ from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi import HTTPException
-from diario.diario_storage import adicionar_entrada, obter_entradas
+from diario.diario_storage import adicionar_entrada, obter_entradas, obter_todas_entradas
 
 # Carrega variáveis de ambiente
 load_dotenv()
@@ -36,6 +36,8 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 if isinstance(SECRET_KEY, str):
     SECRET_KEY = SECRET_KEY.encode("utf-8")
 
+DATE_MET = os.getenv("DATE_MET")  # já vem como string
+
 # Função de verificação de token JWT
 def verify_token(token: str, request: Request = None):
     if not token:
@@ -60,7 +62,7 @@ async def home(request: Request):
     token = request.query_params.get("token")
     user_id = verify_token(token, request)
     if isinstance(user_id, str):
-        return templates.TemplateResponse("index.html", {"request": request, "user_id": user_id})
+        return templates.TemplateResponse("index.html", {"request": request, "user_id": user_id, "date_met": DATE_MET})
     return user_id  # resposta de unauthorized
 
 # Rota do diário
@@ -68,11 +70,13 @@ async def home(request: Request):
 async def diario(request: Request):
     token   = request.query_params.get("token")
     uid     = verify_token(token)
-    entries = obter_entradas(uid)
+    entries = obter_todas_entradas(USER_NAMES)
+    name = USER_NAMES.get(uid)
     return templates.TemplateResponse("diario.html", {
         "request": request,
         "entradas": entries,
-        "token": token
+        "token": token,
+        "name": name
     })
 
 @app.post("/diario", response_class=HTMLResponse)
@@ -80,14 +84,16 @@ async def escrever_entrada(request: Request, mensagem: str = Form(...)):
     token = request.query_params.get("token")
     uid   = verify_token(token)
     adicionar_entrada(uid, mensagem)
+    name = USER_NAMES.get(uid)
     # Importa dinamicamente para evitar dependência circular
     from bot import notify_new_diary_entry
     notify_new_diary_entry(uid, mensagem)
-    entries = obter_entradas(uid)
+    entries = obter_todas_entradas(USER_NAMES)
     return templates.TemplateResponse("diario.html", {
         "request": request,
         "entradas": entries,
-        "token": token
+        "token": token,
+        "name": name
     })
 
 # Endpoint dummy para validação WebApp

@@ -161,69 +161,120 @@
   
   .diario-container {
     max-width: 700px;
-    margin: 0 auto;
-    padding: 2rem;
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    margin: 2rem auto;
+    padding: 0 1rem;
+    font-family: 'Poppins', sans-serif;
   }
   
   .diario-container h1 {
-    font-size: 2rem;
+    text-align: center;
+    font-size: 2.25rem;
     margin-bottom: 0.5rem;
+    color: #d94f6d;
   }
   
   .sub {
+    text-align: center;
     font-style: italic;
-    color: #888;
+    color: #777;
+    margin-bottom: 1.5rem;
+  }
+  
+  .new-entry-form {
+    display: flex;
+    flex-direction: column;
     margin-bottom: 2rem;
   }
   
-  form textarea {
+  .new-entry-form textarea {
     width: 100%;
-    height: 120px;
     padding: 1rem;
-    font-size: 1rem;
+    border: 2px solid #e0e0e0;
     border-radius: 8px;
-    border: 1px solid #ccc;
     resize: vertical;
-    margin-bottom: 1rem;
+    min-height: 100px;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
   }
   
-  form button {
+  .new-entry-form button {
+    align-self: flex-end;
     background-color: #d94f6d;
-    color: white;
-    padding: 0.6rem 1.2rem;
+    color: #fff;
     border: none;
+    padding: 0.6rem 1.2rem;
     border-radius: 8px;
     font-size: 1rem;
     cursor: pointer;
-    transition: 0.3s;
+    transition: background 0.3s ease;
   }
   
-  form button:hover {
+  .new-entry-form button:hover {
     background-color: #c13c59;
   }
   
-  .entradas {
-    margin-top: 2rem;
+  /* Timeline */
+  .timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
   }
   
-  .entrada {
-    border-top: 1px solid #eee;
-    padding-top: 1rem;
-    margin-top: 1rem;
+  /* Post card */
+  .post-card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    overflow: hidden;
+    transition: transform 0.2s ease;
   }
   
-  .data {
-    display: block;
-    color: #aaa;
-    font-size: 0.8rem;
-    margin-top: 0.5rem;
+  .post-card:hover {
+    transform: translateY(-4px);
+  }
+  
+  .post-header {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    background: #f9f9f9;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .avatar {
+    width: 40px;
+    height: 40px;
+    background: #d94f6d;
+    color: #fff;
+    font-weight: bold;
+    font-size: 1.25rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 0.75rem;
+  }
+  
+  .author-name {
+    font-weight: 600;
+    color: #333;
+  }
+  
+  .post-date {
+    font-size: 0.85rem;
+    color: #999;
+  }
+  
+  .post-content {
+    padding: 1rem;
+    color: #444;
+    line-height: 1.5;
   }
   
   .nenhuma {
+    text-align: center;
     color: #aaa;
     font-style: italic;
+    margin-top: 2rem;
   }
   
