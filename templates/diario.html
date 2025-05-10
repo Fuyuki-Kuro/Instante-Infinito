@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="diario-container">
+  <h1>📖 Nosso Diário</h1>
+  <p class="sub">Aqui escrevemos as memórias que o tempo não apaga.</p>
+
+  <!-- Formulário para nova entrada -->
+  <form method="post" action="/diario">
+    <textarea name="mensagem" placeholder="Escreva algo bonito aqui..." required></textarea>
+    <button type="submit">Salvar no Diário</button>
+  </form>
+
+  <!-- Lista de entradas já salvas -->
+  <div class="entradas">
+    {% for entrada in entradas %}
+      <div class="entrada">
+        <p>{{ entrada.mensagem }}</p>
+        <span class="data">{{ entrada.data.strftime('%d/%m/%Y %H:%M') }}</span>
+      </div>
+    {% else %}
+      <p class="nenhuma">Nenhuma entrada ainda... comece agora! 🌙</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

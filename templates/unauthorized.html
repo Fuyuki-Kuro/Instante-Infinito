@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>🛑 Alerta de Hacker Amador 🛑</title>
+  <style>
+    /* Reset */
+    * { margin:0; padding:0; box-sizing:border-box; }
+
+    body {
+      background: #000;
+      color: #f33;
+      font-family: 'Courier New', monospace;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      animation: neon 1.5s ease-in-out infinite alternate;
+    }
+
+    @keyframes neon {
+      from { text-shadow: 0 0 5px #f33, 0 0 10px #f33; }
+      to   { text-shadow: 0 0 20px #f33, 0 0 30px #f33; }
+    }
+
+    .container {
+      background: rgba(0,0,0,0.8);
+      border: 3px dashed #f33;
+      padding: 40px;
+      border-radius: 12px;
+      animation: shake 0.5s ease-in-out infinite;
+    }
+
+    @keyframes shake {
+      0%,100% { transform: translateX(0); }
+      25%      { transform: translateX(-8px); }
+      75%      { transform: translateX(8px); }
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+    }
+
+    p {
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+      color: #ccc;
+    }
+
+    .insult {
+      font-size: 1.5rem;
+      color: #ff5555;
+      margin: 20px 0;
+      animation: flicker 2s infinite;
+    }
+
+    @keyframes flicker {
+      0%,100% { opacity:1; }
+      50%     { opacity:0.4; }
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 12px 24px;
+      background: #f33;
+      color: #000;
+      text-decoration: none;
+      font-weight: bold;
+      border-radius: 6px;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .btn:hover {
+      background: #fff;
+      color: #f33;
+      transform: translateY(-3px) scale(1.05);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Hacker Amador Detectado!</h1>
+    <p class="insult">Vai voltar pro cursinho de Python antes de tentar invadir<br>meu diário, seu script kiddie de quinta!</p>
+    <p>Este sistema não brinca em serviço. Volte pro playground<br>se quiser aprender algo de verdade.</p>
+    <a href="/" class="btn">Sair daqui, DX!</a>
+  </div>
+</body>
+</html>

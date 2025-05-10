@@ -1,54 +1,35 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Instante Infinito</title>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap"
-    rel="stylesheet"
-  />
-  <link rel="stylesheet" href="/static/style.css" />
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block title %}Instante Infinito{% endblock %}
+
+{% block content %}
   <div class="container">
     <h1>Enquanto não nos vemos...</h1>
     <p class="sub">
       Conectados desde
-      <strong>{{ date_met.strftime('%d/%m/%Y %H:%M:%S') }}</strong>
+      <strong>{{ date_met }}</strong>
     </p>
 
-    <!-- Mensagem romântica acima do relógio -->
     <p class="romantic-msg">
         “Enquanto o mundo gira, meu coração conta cada segundo  
         até encontrar o seu olhar pela primeira vez…”
     </p>
 
-    <!-- Relógio digital -->
     <div id="contador">00:00:00:00</div>
 
     <p class="message">
       Cada segundo sem te ver é um verso que o coração escreve em segredo.
     </p>
-    <--
+
     <button onclick="location.href='/magic'">
       Quando nos encontrarmos...
     </button>
-    -->
   </div>
+{% endblock %}
 
-  <!-- Corações flutuantes -->
-  <div class="heart" style="left:10%; animation-delay:0s;"></div>
-  <div class="heart" style="left:30%; animation-delay:2s;"></div>
-  <div class="heart" style="left:50%; animation-delay:4s;"></div>
-  <div class="heart" style="left:70%; animation-delay:1s;"></div>
-  <div class="heart" style="left:90%; animation-delay:3s;"></div>
-
-  <!-- Define a variável `start` antes de carregar o script -->
+{% block scripts %}
   <script>
-    // passamos a data exata em ISO para o JS
-    const start = new Date("{{ date_met.isoformat() }}");
+    const start = new Date("{{ date_met }}");
   </script>
   <script src="/static/script.js"></script>
-</body>
-</html>
+{% endblock %}
