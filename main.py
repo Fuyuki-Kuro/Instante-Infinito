@@ -61,22 +61,29 @@ async def home(request: Request):
 # Rota do diário
 @app.get("/diario", response_class=HTMLResponse)
 async def diario(request: Request):
-    token = request.query_params.get("token")
-    user_id = verify_token(token, request)
-    if not isinstance(user_id, str):
-        return user_id
-    entradas = obter_entradas(user_id)
-    return templates.TemplateResponse("diario.html", {"request": request, "entradas": entradas})
+    token   = request.query_params.get("token")
+    uid     = verify_token(token)
+    entries = obter_entradas(uid)
+    return templates.TemplateResponse("diario.html", {
+        "request": request,
+        "entradas": entries,
+        "token": token
+    })
 
 @app.post("/diario", response_class=HTMLResponse)
 async def escrever_entrada(request: Request, mensagem: str = Form(...)):
     token = request.query_params.get("token")
-    user_id = verify_token(token, request)
-    if not isinstance(user_id, str):
-        return user_id
-    adicionar_entrada(user_id, mensagem)
-    entradas = obter_entradas(user_id)
-    return templates.TemplateResponse("diario.html", {"request": request, "entradas": entradas})
+    uid   = verify_token(token)
+    adicionar_entrada(uid, mensagem)
+    # Importa dinamicamente para evitar dependência circular
+    from bot import notify_new_diary_entry
+    notify_new_diary_entry(uid, mensagem)
+    entries = obter_entradas(uid)
+    return templates.TemplateResponse("diario.html", {
+        "request": request,
+        "entradas": entries,
+        "token": token
+    })
 
 # Endpoint dummy para validação WebApp
 @app.post("/validate_webapp")

@@ -66,6 +66,19 @@ def send_welcome(message):
         reply_markup=keyboard
     )
 
+def notify_new_diary_entry(author_id: int, message_text: str):
+    author_name = USER_NAMES.get(author_id, "Alguém")
+    text = (
+        f"💌 *Nova entrada no diário de {author_name}* 💌\n\n"
+        f"{message_text}"
+    )
+    for uid, name in USER_NAMES.items():
+        if uid != author_id:
+            try:
+                bot.send_message(uid, text, parse_mode="Markdown")
+            except Exception:
+                pass
+
 # Comando /romance para enviar uma mensagem romântica específica
 @bot.message_handler(commands=['romance'])
 def send_romantic_message(message):
