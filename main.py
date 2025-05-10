@@ -30,6 +30,8 @@ logging.basicConfig(
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
 SECRET_KEY = os.getenv("SECRET_KEY")
+if isinstance(SECRET_KEY, str):
+    SECRET_KEY = SECRET_KEY.encode("utf-8")
 
 # Serve arquivos estáticos da pasta 'static'
 app.mount("/static", StaticFiles(directory="static"), name="static")
