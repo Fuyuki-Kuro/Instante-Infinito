@@ -8,6 +8,8 @@ load_dotenv()
 
 # Chave secreta — mantenha isso em segredo e fora do código-fonte se possível
 SECRET_KEY = os.getenv("SECRET_KEY")
+if isinstance(SECRET_KEY, str):
+    SECRET_KEY = SECRET_KEY.encode("utf-8")
 
 def gerar_token(user_id: int):
     payload = {
