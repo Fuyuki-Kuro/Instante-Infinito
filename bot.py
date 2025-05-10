@@ -40,7 +40,8 @@ def send_welcome(message):
     # Enviar o ID do usuário como parte da URL do WebApp
     token = gerar_token(message.from_user.id)
     webapp_url = f"https://ve-scores-vacuum-mall.trycloudflare.com?token={token}"  # Incluindo o user_id na URL
-    
+    diario_url = f"https://ve-scores-vacuum-mall.trycloudflare.com/diario?token={token}"
+
     # Botão que abre o WebApp "Instante Infinito"
     webapp_button = InlineKeyboardButton(
         text="🌐 Abrir Instante Infinito",
@@ -50,7 +51,7 @@ def send_welcome(message):
     # Botão que abre o WebApp "Nosso Diário"
     diario_button = InlineKeyboardButton(
         text="📖 Nosso Diário",
-        web_app=WebAppInfo(url=f"https://ve-scores-vacuum-mall.trycloudflare.com/diario?token={token}")  # Passando a URL com o user_id
+        web_app=WebAppInfo(url=diario_url)  # Passando a URL com o user_id
     )
     
     # Adiciona os dois botões no teclado

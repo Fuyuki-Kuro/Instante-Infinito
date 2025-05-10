@@ -37,7 +37,7 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 def verify_token(token: str = Query(...), request: Request = None):
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
-        user_id = payload.get("user_id") or payload.get("sub")
+        user_id = payload.get("sub")
         if not user_id:
             raise HTTPException(status_code=403, detail="Invalid token payload")
         return str(user_id)
@@ -46,14 +46,18 @@ def verify_token(token: str = Query(...), request: Request = None):
         raise HTTPException(status_code=403, detail="Invalid token")
     
 @app.get("/", response_class=HTMLResponse)
-async def home(request: Request, user_id: str = Depends(verify_token)):
+async def home(request: Request):
+    token = request.cookies.get("token")
+    user_id = verify_token(token, request)
     return templates.TemplateResponse("index.html", {
         "request": request,
         "user_id": user_id
     })
 
 @app.get("/diario", response_class=HTMLResponse)
-async def diario(request: Request, user_id: str = Depends(verify_token)):
+async def diario(request: Request):
+    token = request.cookies.get("token")
+    user_id = verify_token(token, request)
     entradas = obter_entradas(user_id)  # Você deve implementar isso
     return templates.TemplateResponse("diario.html", {
         "request": request,
@@ -64,8 +68,9 @@ async def diario(request: Request, user_id: str = Depends(verify_token)):
 async def escrever_entrada(
     request: Request,
     mensagem: str = Form(...),
-    user_id: str = Depends(verify_token)
 ):
+    token = request.cookies.get("token")
+    user_id = verify_token(token, request)
     # Adiciona a nova entrada ao diário
     adicionar_entrada(user_id, mensagem)
 
