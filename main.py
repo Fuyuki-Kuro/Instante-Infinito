@@ -37,15 +37,14 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 def verify_token(token: str = Query(...), request: Request = None):
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
-        user_id = payload.get("sub")
-        if user_id is None:
-            logging.error(f"Token inválido: {token}")
-            return templates.TemplateResponse("unauthorized.html", {"request": request}, status_code=403)
-        return user_id
-    except PyJWTError:
-        logging.error(f"Token inválido: {token}")
-        return templates.TemplateResponse("unauthorized.html", {"request": request}, status_code=403)
-
+        user_id = payload.get("user_id") or payload.get("sub")
+        if not user_id:
+            raise HTTPException(status_code=403, detail="Invalid token payload")
+        return str(user_id)
+    except PyJWTError as e:
+        print("Token inválido:", e)
+        raise HTTPException(status_code=403, detail="Invalid token")
+    
 @app.get("/", response_class=HTMLResponse)
 async def home(request: Request, user_id: str = Depends(verify_token)):
     return templates.TemplateResponse("index.html", {
@@ -85,4 +84,4 @@ async def unauthorized(request: Request):
 
 def main():
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=10000)
+    uvicorn.run(app, host="0.0.0.0", port=9000)
