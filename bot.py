@@ -10,6 +10,11 @@ load_dotenv()
 TOKEN = os.getenv('TELEGRAM_BOT_TOKEN')
 bot = TeleBot(TOKEN)
 
+USER_NAMES = {
+    int(os.getenv("ID_HE")): "Leonardo",
+    int(os.getenv("ID_SHE")): "Angélica",
+}
+
 # Lista de mensagens românticas
 romantic_messages = [
     "O universo se alinha para que nossos caminhos se cruzem... E aqui estamos, compartilhando um momento juntos.",
