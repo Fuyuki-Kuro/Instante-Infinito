@@ -23,4 +23,3 @@ user_ids = [7023797414, 1913979924]  # exemplo: você e ela
 # Gerando os tokens para cada ID
 for uid in user_ids:
     token = gerar_token(uid)
-    print(f"Token para ID {uid}:\n{token}\n")

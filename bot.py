@@ -100,5 +100,6 @@ def receive_webapp_data(message):
     data = message.web_app_data
     bot.send_message(message.chat.id, f"Você enviou: {data.data}")
 
-if __name__ == "__main__":
-    bot.infinity_polling()
+def start_bot():
+    print("Bot iniciado...")
+    bot.polling(none_stop=True)

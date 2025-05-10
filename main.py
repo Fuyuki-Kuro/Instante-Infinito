@@ -48,7 +48,6 @@ def verify_token(token: str = Query(...), request: Request = None):
 
 @app.get("/", response_class=HTMLResponse)
 async def home(request: Request, user_id: str = Depends(verify_token)):
-    user_id = verify_token(user_id, request)
     return templates.TemplateResponse("index.html", {
         "request": request,
         "user_id": user_id
@@ -56,7 +55,6 @@ async def home(request: Request, user_id: str = Depends(verify_token)):
 
 @app.get("/diario", response_class=HTMLResponse)
 async def diario(request: Request, user_id: str = Depends(verify_token)):
-    user_id = verify_token(user_id, request)
     entradas = obter_entradas(user_id)  # Você deve implementar isso
     return templates.TemplateResponse("diario.html", {
         "request": request,
@@ -81,8 +79,10 @@ async def escrever_entrada(
         "entradas": entradas
     })
 
-
-
 @app.get("/unauthorized")
 async def unauthorized(request: Request):
     return templates.TemplateResponse("unauthorized.html", {"request": request}, status_code=403)
+
+def main():
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=10000)
