@@ -78,6 +78,11 @@ async def escrever_entrada(
         "entradas": entradas
     })
 
+@app.post("/validate_webapp")
+async def validate_webapp():
+    # apenas para evitar erro 404 por enquanto
+    return {"status": "ok"}
+
 @app.get("/unauthorized")
 async def unauthorized(request: Request):
     return templates.TemplateResponse("unauthorized.html", {"request": request}, status_code=403)
